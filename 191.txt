@@ -1,0 +1,23 @@
+public class Solution {
+    // you need to treat n as an unsigned value
+    public int hammingWeight(int n) {
+        int count=0;
+        int n1=0;
+        int n2=0;
+        for(int i=0;i<32;i++){
+        	 n1=n & 1;
+            if(n1==1) {
+                count++;
+            
+        }
+       n2= n >>> 1;//n右移了是另一个整数，n本身的值并不变，需要把它赋给一个变量
+       n=n2;//改变n的值
+            
+        
+        
+ }
+        System.out.println(count);
+        return count;
+	}
+
+}

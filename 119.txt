@@ -1,0 +1,59 @@
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
+public class Solution {
+public List<Integer> getRow(int rowIndex) {
+	List<Integer> l=new ArrayList<Integer>();
+	//int sum=1; //求出(rowIndex)的阶乘sum
+	BigInteger sum=BigInteger.ONE;//求出(rowIndex)的阶乘sum
+	BigInteger a;
+    for(int i=1;i<=rowIndex;i++){  
+    	a= BigInteger.valueOf(i);
+     // sum=sum*i; 
+    	sum=sum.multiply(a);
+    }
+   // int sum2=1;//sum2表示下面第一个for循环里的i的阶乘
+    BigInteger sum2=BigInteger.ONE;//sum2表示下面第一个for循环里的i的阶乘
+   // int sum3=1;//sum3表示rowIndex-i的阶乘
+    BigInteger sum3=BigInteger.ONE;//sum3表示rowIndex-i的阶乘
+    //int num=0;//num表示第(rowIndex+1)行第(i+1)个数
+    BigInteger num=BigInteger.ZERO;//num表示第(rowIndex+1)行第(i+1)个数
+   for(int i=0;i<=rowIndex;i++){
+	   if(i==0){
+		   l.add(1);
+	   }else{
+		   for(int j=1;j<=i;j++){  
+			      //sum2=sum2*j; 
+			   a=BigInteger.valueOf(j);
+			   sum2=sum2.multiply(a);
+			    }
+		   for(int j=1;j<=rowIndex-i;j++){ 
+			   a=BigInteger.valueOf(j);
+			      //sum3=sum3*j; 
+			   sum3=sum3.multiply(a);
+			    }
+		   num=sum.divide(sum2).divide(sum3);
+		   int num1=num.intValue();
+		   l.add(num1);
+		   
+//		   sum2=1;//将sum2、sum3重新置为1，继续循环
+//		   sum3=1;
+		   sum2=BigInteger.ONE;//将sum2、sum3重新置为1，继续循环
+		   sum3=BigInteger.ONE;
+		   
+		   
+		   
+	   }
+   }
+	
+	for(int i=0;i<l.size();i++){
+    	System.out.print(l.get(i)+" ");
+    	
+    }
+	return l;
+    }
+	
+
+
+}
+
