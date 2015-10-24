@@ -1,136 +1,128 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
- 
+
 public class GobangGame {
-	// ¶¨Òå´ïµ½Ó®Ìõ¼şµÄÆå×ÓÊıÄ¿
-	private final int WIN_COUNT = 5;
-	// ¶¨ÒåÓÃ»§ÊäÈëµÄX×ø±ê
-	private int posX = 0;
-	// ¶¨ÒåÓÃ»§ÊäÈëµÄX×ø±ê
-	private int posY = 0;
-	// ¶¨ÒåÆåÅÌ
+	
+	//å®šä¹‰è¾¾åˆ°èµ¢æ¡ä»¶çš„æ£‹å­æ•°ç›®
+	private final int WIN_COUNT=5;
+	private int posX=0;
+	private int posY=0;
+	
 	private Chessboard chessboard;
-
 	/**
-	 * ¿Õ¹¹ÔìÆ÷
+	 * ç©ºæ„é€ å™¨
 	 */
-	public GobangGame() {
+	public GobangGame(){
+		
 	}
 
 	/**
-	 * ¹¹ÔìÆ÷£¬³õÊ¼»¯ÆåÅÌºÍÆå×ÓÊôĞÔ
-	 * 
+	 * æ„é€ å™¨ï¼Œåˆå§‹åŒ–æ£‹ç›˜å’Œæ£‹å­å±æ€§
 	 * @param chessboard
-	 *            ÆåÅÌÀà
+	 * 					æ£‹ç›˜ç±»
 	 */
-	public GobangGame(Chessboard chessboard) {
-		this.chessboard = chessboard;
+	
+	public GobangGame(Chessboard chessboard){
+		this.chessboard=chessboard;
 	}
-
-	/**
-	 * ¼ì²éÊäÈëÊÇ·ñºÏ·¨¡£
-	 * 
-	 * @param inputStr
-	 *            ÓÉ¿ØÖÆÌ¨ÊäÈëµÄ×Ö·û´®¡£
-	 * @return ×Ö·û´®ºÏ·¨·µ»Øtrue,·´Ôò·µ»Øfalse¡£
-	 */
-	public boolean isValid(String inputStr) {
-		// ½«ÓÃ»§ÊäÈëµÄ×Ö·û´®ÒÔ¶ººÅ(,)×÷Îª·Ö¸ô£¬·Ö¸ô³ÉÁ½¸ö×Ö·û´®
-		String[] posStrArr = inputStr.split(",");
-		try {
-			posX = Integer.parseInt(posStrArr[0]) - 1;
-			posY = Integer.parseInt(posStrArr[1]) - 1;
-		} catch (NumberFormatException e) {
+	
+	public boolean isValid(String inputStr){
+		String[] posStrArr=inputStr.split(",");
+		try{
+			posX=Integer.parseInt(posStrArr[0])-1;
+			posY=Integer.parseInt(posStrArr[1])-1;
+		}catch(NumberFormatException e){
 			chessboard.printBoard();
-			System.out.println("ÇëÒÔ(Êı×Ö,Êı×Ö)µÄ¸ñÊ½ÊäÈë£º");
+			System.out.println("è¯·ä»¥ï¼ˆæ•°å­—ï¼Œæ•°å­—ï¼‰çš„æ ¼å¼è¾“å…¥ï¼š");
 			return false;
 		}
-		// ¼ì²éÊäÈëÊıÖµÊÇ·ñÔÚ·¶Î§Ö®ÄÚ
-		if (posX < 0 || posX >= Chessboard.BOARD_SIZE || posY < 0
-				|| posY >= Chessboard.BOARD_SIZE) {
+		//æ£€æŸ¥è¾“å…¥æ•°å€¼æ˜¯å¦åœ¨èŒƒå›´ä¹‹å†…
+		if(posX<0 || posX>=Chessboard.BOARD_SIZE ||posY<0
+				||posY>=Chessboard.BOARD_SIZE){
 			chessboard.printBoard();
-			System.out.println("XÓëY×ø±êÖ»ÄÜ´óÓÚµÈÓÚ1,ÓëĞ¡ÓÚµÈÓÚ" + Chessboard.BOARD_SIZE
-					+ ",ÇëÖØĞÂÊäÈë£º");
-			return false;
+			System.out.println("Xä¸Yåæ ‡åªèƒ½å¤§äºç­‰äº1,ä¸å°äºç­‰äº"+Chessboard.BOARD_SIZE
+					+",è¯·é‡æ–°è¾“å…¥");
+			
 		}
-		// ¼ì²éÊäÈëµÄÎ»ÖÃÊÇ·ñÒÑ¾­ÓĞÆå×Ó
-		String[][] board = chessboard.getBoard();
-		if (board[posX][posY] != "Ê®") {
+		
+		//æ£€æŸ¥è¾“å…¥çš„ä½ç½®æ˜¯å¦æœ‰æ£‹å­
+		String[][] board=chessboard.getBoard();
+		if(board[posX][posY]!="å"){
 			chessboard.printBoard();
-			System.out.println("´ËÎ»ÖÃÒÑ¾­ÓĞÆå×Ó£¬ÇëÖØĞÂÊäÈë£º");
-			return false;
+			System.out.println("æ­¤ä½ç½®å·²ç»æœ‰æ£‹å­ï¼Œè¯·é‡æ–°è¾“å…¥ï¼š");
 		}
 		return true;
 	}
-
+	
 	/**
-	 * ¿ªÊ¼ÏÂÆå
+	 * å¼€å§‹ä¸‹æ£‹
+	 * @param args
 	 */
 	public void start() throws Exception {
-		// trueÎªÓÎÏ·½áÊø
+		// trueä¸ºæ¸¸æˆç»“æŸ
 		boolean isOver = false;
 		chessboard.initBoard();
 		chessboard.printBoard();
-		// »ñÈ¡¼üÅÌµÄÊäÈë
+		// è·å–é”®ç›˜çš„è¾“å…¥
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String inputStr = null;
-		// br.readLine:Ã¿µ±¼üÅÌÊäÈëÒ»ĞĞÄÚÈİ°´»Ø³µ¼ü£¬ÔòÊäÈëµÄÄÚÈİ±»br¶ÁÈ¡µ½
+		// br.readLine:æ¯å½“é”®ç›˜è¾“å…¥ä¸€è¡Œå†…å®¹æŒ‰å›è½¦é”®ï¼Œåˆ™è¾“å…¥çš„å†…å®¹è¢«brè¯»å–åˆ°
 		while ((inputStr = br.readLine()) != null) {
 			isOver = false;
 			if (!isValid(inputStr)) {
-				// Èç¹û²»ºÏ·¨£¬ÒªÇóÖØĞÂÊäÈë£¬ÔÙ¼ÌĞø
+				// å¦‚æœä¸åˆæ³•ï¼Œè¦æ±‚é‡æ–°è¾“å…¥ï¼Œå†ç»§ç»­
 				continue;
 			}
-			// °Ñ¶ÔÓ¦µÄÊı×éÔªËØ¸³Îª"¡ñ"
+			// æŠŠå¯¹åº”çš„æ•°ç»„å…ƒç´ èµ‹ä¸º"â—"
 			String chessman = Chessman.BLACK.getChessman();
 			chessboard.setBoard(posX, posY, chessman);
-			// ÅĞ¶ÏÓÃ»§ÊÇ·ñÓ®ÁË
+			// åˆ¤æ–­ç”¨æˆ·æ˜¯å¦èµ¢äº†
 			if (isWon(posX, posY, chessman)) {
 				isOver = true;
 
 			} else {
-				// ¼ÆËã»úËæ»úÑ¡ÔñÎ»ÖÃ×ø±ê
-				int[] computerPosArr = computerDo();
+				// è®¡ç®—æœºéšæœºé€‰æ‹©ä½ç½®åæ ‡
+				int[] computerPosArr = computerDo(posX,posY);
 				chessman = Chessman.WHITE.getChessman();
 				chessboard.setBoard(computerPosArr[0], computerPosArr[1],
 						chessman);
-				// ÅĞ¶Ï¼ÆËã»úÊÇ·ñÓ®ÁË
+				// åˆ¤æ–­è®¡ç®—æœºæ˜¯å¦èµ¢äº†
 				if (isWon(computerPosArr[0], computerPosArr[1], chessman)) {
 					isOver = true;
 				}
 			}
-			// Èç¹û²úÉúÊ¤Õß£¬Ñ¯ÎÊÓÃ»§ÊÇ·ñ¼ÌĞøÓÎÏ·
+			// å¦‚æœäº§ç”Ÿèƒœè€…ï¼Œè¯¢é—®ç”¨æˆ·æ˜¯å¦ç»§ç»­æ¸¸æˆ
 			if (isOver) {
-				// Èç¹û¼ÌĞø£¬ÖØĞÂ³õÊ¼»¯ÆåÅÌ£¬¼ÌĞøÓÎÏ·
+				// å¦‚æœç»§ç»­ï¼Œé‡æ–°åˆå§‹åŒ–æ£‹ç›˜ï¼Œç»§ç»­æ¸¸æˆ
 				if (isReplay(chessman)) {
 					chessboard.initBoard();
 					chessboard.printBoard();
 					continue;
 				}
-				// Èç¹û²»¼ÌĞø£¬ÍË³ö³ÌĞò
+				// å¦‚æœä¸ç»§ç»­ï¼Œé€€å‡ºç¨‹åº
 				break;
 			}
 			chessboard.printBoard();
-			System.out.println("ÇëÊäÈëÄúÏÂÆåµÄ×ø±ê£¬Ó¦ÒÔx,yµÄ¸ñÊ½ÊäÈë£º");
+			System.out.println("è¯·è¾“å…¥æ‚¨ä¸‹æ£‹çš„åæ ‡ï¼Œåº”ä»¥x,yçš„æ ¼å¼è¾“å…¥ï¼š");
 		}
 	}
-
+	
 	/**
-	 * ÊÇ·ñÖØĞÂ¿ªÊ¼ÏÂÆå¡£
+	 * æ˜¯å¦é‡æ–°å¼€å§‹ä¸‹æ£‹ã€‚
 	 * 
 	 * @param chessman
-	 *            "¡ñ"ÎªÓÃ»§£¬"¡ğ"Îª¼ÆËã»ú¡£
-	 * @return ¿ªÊ¼·µ»Øtrue£¬·´Ôò·µ»Øfalse¡£
+	 *            "â—"ä¸ºç”¨æˆ·ï¼Œ"â—‹"ä¸ºè®¡ç®—æœºã€‚
+	 * @return å¼€å§‹è¿”å›trueï¼Œååˆ™è¿”å›falseã€‚
 	 */
 	public boolean isReplay(String chessman) throws Exception {
 		chessboard.printBoard();
-		String message = chessman.equals(Chessman.BLACK.getChessman()) ? "¹§Ï²Äú£¬ÄúÓ®ÁË£¬"
-				: "ºÜÒÅº¶£¬ÄúÊäÁË£¬";
-		System.out.println(message + "ÔÙÏÂÒ»¾Ö£¿(y/n)");
+		String message = chessman.equals(Chessman.BLACK.getChessman()) ? "æ­å–œæ‚¨ï¼Œæ‚¨èµ¢äº†ï¼Œ"
+				: "å¾ˆé—æ†¾ï¼Œæ‚¨è¾“äº†ï¼Œ";
+		System.out.println(message + "å†ä¸‹ä¸€å±€ï¼Ÿ(y/n)");
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		if (br.readLine().equals("y")) {
-			// ¿ªÊ¼ĞÂÒ»¾Ö
+			// å¼€å§‹æ–°ä¸€å±€
 			return true;
 		}
 		return false;
@@ -138,34 +130,250 @@ public class GobangGame {
 	}
 
 	/**
-	 * ¼ÆËã»úËæ»úÏÂÆå
+	 * è®¡ç®—æœºéšæœºä¸‹æ£‹
 	 */
-	public int[] computerDo() {
-		
-		int posX = (int) (Math.random() * (Chessboard.BOARD_SIZE - 1));
-		int posY = (int) (Math.random() * (Chessboard.BOARD_SIZE - 1));
-		String[][] board = chessboard.getBoard();
-		while (board[posX][posY] != "Ê®") {
-			posX = (int) (Math.random() * (Chessboard.BOARD_SIZE - 1));
-			posY = (int) (Math.random() * (Chessboard.BOARD_SIZE - 1));
+	public int[] computerDo(int posX,int posY) {
+		String[][] board=chessboard.getBoard();
+		//æ°´å¹³æ–¹å‘åˆ¤æ–­
+		int RLastY=posY;
+		String chessman = Chessman.BLACK.getChessman();
+		while(RLastY>0 && board[posX][RLastY]==chessman){
+			RLastY--;
 		}
-		int[] result = { posX, posY };
+		int LRLastY=RLastY; 
+		int RNum=0;
+		RLastY++;
+		while(RLastY<Chessboard.BOARD_SIZE&&board[posX][RLastY]==chessman){
+			RNum++;
+			RLastY++;
+		}
+		//ç«–ç›´æ–¹å‘åˆ¤æ–­
+		int LLastX=posX;
+		while(LLastX>0 && board[LLastX][posY]==chessman){
+			LLastX--;
+		}
+		int LLLastX=LLastX; 
+		int LNum=0;
+		LLastX++;
+		while(LLastX<Chessboard.BOARD_SIZE&&board[LLastX][posY]==chessman){
+			LLastX++;
+			LNum++;
+		}
+		//å³ä¸Šå·¦ä¸‹åˆ¤æ–­
+		int RULastX = posX;
+		int LDLastY = posY;
+
+		// åˆ¤æ–­æœ‰å¤šå°‘ä¸ªè¿åœ¨ä¸€èµ·äº†
+		while (RULastX >0 && LDLastY < Chessboard.BOARD_SIZE&& board[RULastX][LDLastY] == chessman) {
+			RULastX--;
+			LDLastY++;
+		}
+		int RRULastX=RULastX;//è®°å½•å³ä¸Šæ–¹æ£‹ç›˜çš„xåæ ‡
+		int ULDLastY=LDLastY;//è®°å½•å³ä¸Šæ–¹æ£‹ç›˜çš„yåæ ‡
+		int LDNum = 0;
+		RULastX++;
+		LDLastY--;
+	
+		while (LDLastY >0&& RULastX <  Chessboard.BOARD_SIZE
+				&& board[RULastX][LDLastY] == chessman) {
+			LDNum++;
+			RULastX++;
+			LDLastY--;
+		}
+		
+		//å·¦ä¸Šå³ä¸‹åˆ¤æ–­
+				int LULastX = posX;
+				int RDLastY = posY;
+
+				// åˆ¤æ–­æœ‰å¤šå°‘ä¸ªè¿åœ¨ä¸€èµ·äº†
+				while (LULastX > 0 && RDLastY>=0&& board[LULastX][RDLastY] == chessman) {
+					LULastX--;
+					RDLastY--;
+				}
+				int LLULastX=LULastX;//è®°å½•å·¦ä¸Šæ–¹æ£‹ç›˜çš„xåæ ‡
+				int LRDLastY=RDLastY;//è®°å½•å·¦ä¸Šæ–¹æ£‹ç›˜çš„yåæ ‡
+				int LUNum = 0;
+				LULastX++;
+				RDLastY++;
+			
+				while (LULastX >0&& LULastX <  Chessboard.BOARD_SIZE
+						&&RDLastY > 0&& RDLastY <  Chessboard.BOARD_SIZE 
+						&&board[LULastX][RDLastY] == chessman) {
+					LUNum++;
+					LULastX++;
+					RDLastY++;
+				}
+//		int posX = (int) (Math.random() * (Chessboard.BOARD_SIZE - 1));
+//		int posY = (int) (Math.random() * (Chessboard.BOARD_SIZE - 1));
+//		String[][] board = chessboard.getBoard();
+//		while (board[posX][posY] != "å") {
+//			posX = (int) (Math.random() * (Chessboard.BOARD_SIZE - 1));
+//			posY = (int) (Math.random() * (Chessboard.BOARD_SIZE - 1));
+//		}
+				
+		//å–å››ä¸ªæ–¹å‘çš„æœ€å¤§å€¼ï¼Œä»è€Œå†³å®šç”µè„‘ä¸‹åœ¨å“ªä¸ªä½ç½®
+		int max=0;
+		if(max<RNum)max=RNum;
+		if(max<LNum)max=LNum;
+		if(max<LDNum)max=LDNum;
+		if(max<LUNum)max=LUNum;
+		
+		//int[] result={0,0};
+		int x=0;
+		int y=0;
+		
+		//æ°´å¹³æ–¹å‘åˆ¤æ–­ï¼Œæœ€å·¦è¾¹å’Œæœ€å³è¾¹æ˜¯å¦ä¸ºç©º
+		if(max==RNum){
+			if(max==1){
+				if(posY==1){
+					x=posX;
+					y=posY+1;
+			}
+				if(posY==21){
+					x=posX;
+					y=posY-1;
+				}
+				else if(board[posX][posY+1]=="å"){
+				
+							x=posX;
+							y=posY+1;
+				
+																	}
+					else{
+						do{
+							x = (int) (Math.random() * (Chessboard.BOARD_SIZE - 1));
+							y = (int) (Math.random() * (Chessboard.BOARD_SIZE - 1));
+							//int result1[] ={x,y};
+						}while(board[posX][posY]!="å");
+					}
+			
+		   }
+		
+		else{
+			if(board[posX][LRLastY]=="å"){
+				x=posX;
+				y=LRLastY;
+			}
+			else if(board[posX][RLastY]=="å"){
+				x=posX;
+				y=RLastY;
+			}
+			
+		}
+	}
+		//ç«–ç›´æ–¹å‘åˆ¤æ–­æœ€ä¸Šæ–¹æ£‹ç›˜å’Œæœ€ä¸‹æ–¹æ£‹ç›˜æ˜¯å¦ä¸ºç©º
+		else if(max==LNum){
+			
+			if(board[LLastX][posY]=="å"){//æœ€ä¸Šæ–¹çš„æ£‹ç›˜æ˜¯å¦æ˜¯ç©ºçš„
+				x=LLastX;
+				y=posY;
+			}
+			else if(board[LNum][posY]=="å"){//æœ€ä¸‹æ–¹æ£‹ç›˜æ˜¯å¦ä¸ºç©º
+				x=LNum;
+				y=posY;
+			}
+			
+	}
+		//å³ä¸Šå·¦ä¸‹
+	else	if(max==LDNum){
+		if(board[RRULastX][ULDLastY]=="å"){//æœ€å³ä¸Šæ–¹çš„æ£‹ç›˜æ˜¯å¦æ˜¯ç©ºçš„
+			x=RRULastX;
+			y=ULDLastY;
+		}
+		else if(board[RULastX][LDLastY]=="å"){//æœ€å·¦ä¸‹æ£‹ç›˜æ˜¯å¦ä¸ºç©º
+			x=RULastX;
+			y=LDLastY;
+		}
+	}
+	else	if(max==LUNum){
+		if(board[LLULastX][LRDLastY]=="å"){//æœ€å·¦ä¸Šæ–¹çš„æ£‹ç›˜æ˜¯å¦æ˜¯ç©ºçš„
+			x=LLULastX;
+			y=LRDLastY;
+		}
+		else if(board[LULastX][RDLastY]=="å"){//æœ€å³ä¸‹æ£‹ç›˜æ˜¯å¦ä¸ºç©º
+			x=LULastX;
+			y=RDLastY;
+		}
+	}
+//		else if(max==LNum){
+//			
+//			if(board[posX][LLLastY]=="å"){//æœ€ä¸Šæ–¹çš„æ£‹ç›˜æ˜¯å¦æ˜¯ç©ºçš„
+//				x=posX;
+//				y=LLLastY;
+//			}
+//			else if(board[posX][LLastY]=="å"){//æœ€ä¸‹æ–¹æ£‹ç›˜æ˜¯å¦ä¸ºç©º
+//				x=posX;
+//				y=LLastY;
+//			}
+//			
+//	}
+//		
+		int[] result = {x, y };
 		return result;
 	}
 
 	/**
-	 * ÅĞ¶ÏÊäÓ®
+	 * åˆ¤æ–­è¾“èµ¢
 	 * 
 	 * @param posX
-	 *            Æå×ÓµÄX×ø±ê¡£
+	 *            æ£‹å­çš„Xåæ ‡ã€‚
 	 * @param posY
-	 *            Æå×ÓµÄY×ø±ê
+	 *            æ£‹å­çš„Yåæ ‡
 	 * @param ico
-	 *            Æå×ÓÀàĞÍ
-	 * @return Èç¹ûÓĞÎå¿ÅÏàÁÚÆå×ÓÁ¬³ÉÒ»ÌõÖ±½Ó£¬·µ»ØÕæ£¬·ñÔòÏà·´¡£
+	 *            æ£‹å­ç±»å‹
+	 * @return å¦‚æœæœ‰äº”é¢—ç›¸é‚»æ£‹å­è¿æˆä¸€æ¡ç›´æ¥ï¼Œè¿”å›çœŸï¼Œå¦åˆ™ç›¸åã€‚
 	 */
+	
 	public boolean isWon(int posX, int posY, String ico) {
-		return false;
+		int startX=0;
+		int startY=0;
+		int endX=Chessboard.BOARD_SIZE-1;
+		int endY=endX;
+		int count=0;
+		int temp=0;
+		//è®¡ç®—èµ·ç‚¹çš„æœ€å°Xåæ ‡ä¸Yåæ ‡
+		temp=posX-WIN_COUNT+1;
+		startX=temp<0 ? 0:temp;
+		temp=posY-WIN_COUNT+1;
+		startY=temp<0 ? 0:temp;
+		temp=posX+WIN_COUNT-1;
+		endX=temp>Chessboard.BOARD_SIZE-1?Chessboard.BOARD_SIZE-1:temp;
+		temp=posY+WIN_COUNT-1;
+		endY=temp>Chessboard.BOARD_SIZE-1?Chessboard.BOARD_SIZE-1:temp;
+		String[][] board=chessboard.getBoard();
+		//åˆ¤æ–­æ¨ªå‘
+		for(int i=startY;i<endY;i++){
+			if(board[posX][i]==ico && board[posX][i+1]==ico){
+				count++;
+			}else if(count!=WIN_COUNT-1){
+				count=0;
+				
+			}
+			}
+		//åˆ¤æ–­ç«–ç›´æ–¹å‘
+		for(int i=startX;i<endX;i++){
+			if(board[i][posY]==ico && board[i+1][posY]==ico){
+				count++;
+			}else if(count!=WIN_COUNT-1){
+				count=0;
+				
+			}
+			}
+		//åˆ¤æ–­æ–œçš„æ–¹å‘
+		for(int i=startY;i<endY;i++){
+			if(board[i][i]==ico && board[i+1][i+1]==ico){
+				count++;
+			}else if(count!=WIN_COUNT-1){
+				count=0;
+				
+			}
+			}
+			if(count==0){
+				return false;}
+			
+			else {
+				return true;}
+
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -173,4 +381,5 @@ public class GobangGame {
 		GobangGame gb = new GobangGame(new Chessboard());
 		gb.start();
 	}
+
 }
