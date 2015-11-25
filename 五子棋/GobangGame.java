@@ -141,15 +141,6 @@ public class GobangGame {
 	 * 计算机随机下棋
 	 */
 	public int[] computerDo() {
-//		
-//		int posX = (int) (Math.random() * (Chessboard.BOARD_SIZE - 1));
-//		int posY = (int) (Math.random() * (Chessboard.BOARD_SIZE - 1));
-//		String[][] board = chessboard.getBoard();
-//		while (board[posX][posY] != "十") {
-//			posX = (int) (Math.random() * (Chessboard.BOARD_SIZE - 1));
-//			posY = (int) (Math.random() * (Chessboard.BOARD_SIZE - 1));
-//		}
-//		int[] result = { posX, posY };
 		
 		String[][] board=chessboard.getBoard();
 		//水平方向判断
