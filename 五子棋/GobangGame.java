@@ -1,136 +1,136 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
- 
+
 public class GobangGame {
-	// 定义达到赢条件的棋子数目
+	// 锟斤拷锟斤拷锟斤到赢锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷目
 	private final int WIN_COUNT = 5;
-	// 定义用户输入的X坐标
+	// 锟斤拷锟斤拷锟矫伙拷锟斤拷锟斤拷锟斤拷X锟斤拷锟斤拷
 	private int posX = 0;
-	// 定义用户输入的X坐标
+	// 锟斤拷锟斤拷锟矫伙拷锟斤拷锟斤拷锟斤拷X锟斤拷锟斤拷
 	private int posY = 0;
-	// 定义棋盘
+	// 锟斤拷锟斤拷锟斤拷锟斤拷
 	private Chessboard chessboard;
 
 	/**
-	 * 空构造器
+	 * 锟秸癸拷锟斤拷锟斤拷
 	 */
 	public GobangGame() {
 	}
 
 	/**
-	 * 构造器，初始化棋盘和棋子属性
-	 * 
+	 * 锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷始锟斤拷锟斤拷锟教猴拷锟斤拷锟斤拷锟斤拷锟斤拷
+	 *
 	 * @param chessboard
-	 *            棋盘类
+	 *            锟斤拷锟斤拷锟斤拷
 	 */
 	public GobangGame(Chessboard chessboard) {
 		this.chessboard = chessboard;
 	}
 
 	/**
-	 * 检查输入是否合法。
-	 * 
+	 * 锟斤拷锟斤拷锟斤拷锟斤拷锟角凤拷锟较凤拷锟斤拷
+	 *
 	 * @param inputStr
-	 *            由控制台输入的字符串。
-	 * @return 字符串合法返回true,反则返回false。
+	 *            锟缴匡拷锟斤拷台锟斤拷锟斤拷锟斤拷锟街凤拷锟斤拷锟斤拷
+	 * @return 锟街凤拷锟斤拷锟较凤拷锟斤拷锟斤拷true,锟斤拷锟津返伙拷false锟斤拷
 	 */
 	public boolean isValid(String inputStr) {
-		// 将用户输入的字符串以逗号(,)作为分隔，分隔成两个字符串
+		// 锟斤拷锟矫伙拷锟斤拷锟斤拷锟斤拷锟街凤拷锟斤拷锟皆讹拷锟斤拷(,)锟斤拷为锟街革拷锟斤拷锟街革拷锟斤拷锟斤拷锟斤拷锟街凤拷锟斤拷
 		String[] posStrArr = inputStr.split(",");
 		try {
 			posX = Integer.parseInt(posStrArr[0]) - 1;
 			posY = Integer.parseInt(posStrArr[1]) - 1;
 		} catch (NumberFormatException e) {
 			chessboard.printBoard();
-			System.out.println("请以(数字,数字)的格式输入：");
+			System.out.println("锟斤拷锟斤拷(锟斤拷锟斤拷,锟斤拷锟斤拷)锟侥革拷式锟斤拷锟诫：");
 			return false;
 		}
-		// 检查输入数值是否在范围之内
+		// 锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷值锟角凤拷锟节凤拷围之锟斤拷
 		if (posX < 0 || posX >= Chessboard.BOARD_SIZE || posY < 0
 				|| posY >= Chessboard.BOARD_SIZE) {
 			chessboard.printBoard();
-			System.out.println("X与Y坐标只能大于等于1,与小于等于" + Chessboard.BOARD_SIZE
-					+ ",请重新输入：");
+			System.out.println("X锟斤拷Y锟斤拷锟斤拷只锟杰达拷锟节碉拷锟斤拷1,锟斤拷小锟节碉拷锟斤拷" + Chessboard.BOARD_SIZE
+					+ ",锟斤拷锟斤拷锟斤拷锟斤拷锟诫：");
 			return false;
 		}
-		// 检查输入的位置是否已经有棋子
+		// 锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷位锟斤拷锟角凤拷锟窖撅拷锟斤拷锟斤拷锟斤拷
 		String[][] board = chessboard.getBoard();
 		if (board[posX][posY] != "十") {
 			chessboard.printBoard();
-			System.out.println("此位置已经有棋子，请重新输入：");
+			System.out.println("锟斤拷位锟斤拷锟窖撅拷锟斤拷锟斤拷锟接ｏ拷锟斤拷锟斤拷锟斤拷锟斤拷锟诫：");
 			return false;
 		}
 		return true;
 	}
 
 	/**
-	 * 开始下棋
+	 * 锟斤拷始锟斤拷锟斤拷
 	 */
 	public void start() throws Exception {
-		// true为游戏结束
+		// true为锟斤拷戏锟斤拷锟斤拷
 		boolean isOver = false;
 		chessboard.initBoard();
 		chessboard.printBoard();
-		// 获取键盘的输入
+		// 锟斤拷取锟斤拷锟教碉拷锟斤拷锟斤拷
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String inputStr = null;
-		// br.readLine:每当键盘输入一行内容按回车键，则输入的内容被br读取到
+		// br.readLine:每锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷一锟斤拷锟斤拷锟捷帮拷锟截筹拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟捷憋拷br锟斤拷取锟斤拷
 		while ((inputStr = br.readLine()) != null) {
 			isOver = false;
 			if (!isValid(inputStr)) {
-				// 如果不合法，要求重新输入，再继续
+				// 锟斤拷锟斤拷锟斤拷锟较凤拷锟斤拷要锟斤拷锟斤拷锟斤拷锟斤拷锟诫，锟劫硷拷锟斤拷
 				continue;
 			}
-			// 把对应的数组元素赋为"●"
+			// 锟窖讹拷应锟斤拷锟斤拷锟斤拷元锟截革拷为"锟斤拷"
 			String chessman = Chessman.BLACK.getChessman();
 			chessboard.setBoard(posX, posY, chessman);
-			// 判断用户是否赢了
+			// 锟叫讹拷锟矫伙拷锟角凤拷赢锟斤拷
 			if (isWon(posX, posY, chessman)) {
 				isOver = true;
 
 			} else {
-				// 计算机随机选择位置坐标
+				// 锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷选锟斤拷位锟斤拷锟斤拷锟斤拷
 				int[] computerPosArr = computerDo();
 				chessman = Chessman.WHITE.getChessman();
 				chessboard.setBoard(computerPosArr[0], computerPosArr[1],
 						chessman);
-				// 判断计算机是否赢了
+				// 锟叫断硷拷锟斤拷锟斤拷锟角凤拷赢锟斤拷
 				if (isWon(computerPosArr[0], computerPosArr[1], chessman)) {
 					isOver = true;
 				}
 			}
-			// 如果产生胜者，询问用户是否继续游戏
+			// 锟斤拷锟斤拷锟斤拷锟斤拷胜锟竭ｏ拷询锟斤拷锟矫伙拷锟角凤拷锟斤拷锟斤拷锟斤拷戏
 			if (isOver) {
-				// 如果继续，重新初始化棋盘，继续游戏
+				// 锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟铰筹拷始锟斤拷锟斤拷锟教ｏ拷锟斤拷锟斤拷锟斤拷戏
 				if (isReplay(chessman)) {
 					chessboard.initBoard();
 					chessboard.printBoard();
 					continue;
 				}
-				// 如果不继续，退出程序
+				// 锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟剿筹拷锟斤拷锟斤拷
 				break;
 			}
 			chessboard.printBoard();
-			System.out.println("请输入您下棋的坐标，应以x,y的格式输入：");
+			System.out.println("锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟疥，应锟斤拷x,y锟侥革拷式锟斤拷锟诫：");
 		}
 	}
 
 	/**
-	 * 是否重新开始下棋。
-	 * 
+	 * 锟角凤拷锟斤拷锟铰匡拷始锟斤拷锟藉。
+	 *
 	 * @param chessman
-	 *            "●"为用户，"○"为计算机。
-	 * @return 开始返回true，反则返回false。
+	 *            "锟斤拷"为锟矫伙拷锟斤拷"锟斤拷"为锟斤拷锟斤拷锟斤拷锟斤拷
+	 * @return 锟斤拷始锟斤拷锟斤拷true锟斤拷锟斤拷锟津返伙拷false锟斤拷
 	 */
 	public boolean isReplay(String chessman) throws Exception {
 		chessboard.printBoard();
-		String message = chessman.equals(Chessman.BLACK.getChessman()) ? "恭喜您，您赢了，"
-				: "很遗憾，您输了，";
-		System.out.println(message + "再下一局？(y/n)");
+		String message = chessman.equals(Chessman.BLACK.getChessman()) ? "锟斤拷喜锟斤拷锟斤拷锟斤拷赢锟剿ｏ拷"
+				: "锟斤拷锟脚猴拷锟斤拷锟斤拷锟斤拷锟剿ｏ拷";
+		System.out.println(message + "锟斤拷锟斤拷一锟街ｏ拷(y/n)");
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		if (br.readLine().equals("y")) {
-			// 开始新一局
+			// 锟斤拷始锟斤拷一锟斤拷
 			return true;
 		}
 		return false;
@@ -138,110 +138,171 @@ public class GobangGame {
 	}
 
 	/**
-	 * 计算机随机下棋
+	 * 锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷
 	 */
-	public int[] computerDo() {
-		
-		String[][] board=chessboard.getBoard();
-		//水平方向判断
-		int yy=posY;
-		String chessman = Chessman.BLACK.getChessman();
-		while(yy>0 && board[posX][yy]==chessman){
-			yy--;
-		}
-		int y0=yy; 
-		int num1=0;
-		yy++;
-		while(yy<Chessboard.BOARD_SIZE&&board[posX][yy]==chessman){
-			num1++;
-			yy++;
-		}
-		//竖直方向判断
-		int xx=posX;
-		while(xx>0 && board[xx][posY]==chessman){
-					xx--;
-		}
-		int x0=xx; 
-		int num2=0;
-		xx++;
-		while(xx<Chessboard.BOARD_SIZE&&board[xx][posY]==chessman){
-			xx++;
-			num2++;
-		}		
-		//取四个方向的最大值，从而决定电脑下在哪个位置
-		int max=0;
-		if(max<num1)max=num1;
-		if(max<num2)max=num2;
-		int x=0;
-		int y=0;
-		
-		//水平方向判断，最左边和最右边是否为空
-		if(max==num1){
-			if(max==1){
-				if(posY==1){
-					x=posX;
-					y=posY+1;
-			}
-				if(posY==21){
-					x=posX;
-					y=posY-1;
-				}
-				else if(board[posX][posY+1]=="十"){
-				
-							x=posX;
-							y=posY+1;
-																	
-				}else{
-						do{
-							x = (int) (Math.random() * (Chessboard.BOARD_SIZE - 1));
-							y = (int) (Math.random() * (Chessboard.BOARD_SIZE - 1));
-							//int result1[] ={x,y};
-						}while(board[posX][posY]!="十");
-					}
-			
-		}else{
-			if(board[posX][y0]=="十"){
-				x=posX;
-				y=y0;
-			}else if(board[posX][yy]=="十"){
-				x=posX;
-				y=yy;
-			}
-			
-		}
-	}//竖直方向判断最上方棋盘和最下方棋盘是否为空
-		else if(max==num2){
-			if(board[xx][posY]=="十"){//最上方的棋盘是否是空的
-				x=xx;
-				y=posY;
-			}
-			else if(board[num2][posY]=="十"){//最下方棋盘是否为空
-				x=num2;
-				y=posY;
-			}
-	}		
-		int[] result = { x, y };
-		return result;
-	}
+   public int[] computerDo(int posX,int posY) {
+   		String[][] board=chessboard.getBoard();
+   		int RLastY=posY;
+   		String chessman = Chessman.BLACK.getChessman();
+   		while(RLastY>0 && board[posX][RLastY]==chessman){
+   			RLastY--;
+   		}
+   		int LRLastY=RLastY;
+   		int RNum=0;
+   		RLastY++;
+   		while(RLastY<Chessboard.BOARD_SIZE&&board[posX][RLastY]==chessman){
+   			RNum++;
+   			RLastY++;
+   		}
+   		int LLastX=posX;
+   		while(LLastX>0 && board[LLastX][posY]==chessman){
+   			LLastX--;
+   		}
+   		int LLLastX=LLastX;
+   		int LNum=0;
+   		LLastX++;
+   		while(LLastX<Chessboard.BOARD_SIZE&&board[LLastX][posY]==chessman){
+   			LLastX++;
+   			LNum++;
+   		}
+   		int RULastX = posX;
+   		int LDLastY = posY;
+   		while (RULastX >0 && LDLastY < Chessboard.BOARD_SIZE&& board[RULastX][LDLastY] == chessman) {
+   			RULastX--;
+   			LDLastY++;
+   		}
+   		int RRULastX=RULastX;
+   		int ULDLastY=LDLastY;
+   		int LDNum = 0;
+   		RULastX++;
+   		LDLastY--;
+
+   		while (LDLastY >0&& RULastX <  Chessboard.BOARD_SIZE
+   				&& board[RULastX][LDLastY] == chessman) {
+   			LDNum++;
+   			RULastX++;
+   			LDLastY--;
+   		}
+   				int LULastX = posX;
+   				int RDLastY = posY;
+   				while (LULastX > 0 && RDLastY>=0&& board[LULastX][RDLastY] == chessman) {
+   					LULastX--;
+   					RDLastY--;
+   				}
+   				int LLULastX=LULastX;
+   				int LRDLastY=RDLastY;
+   				int LUNum = 0;
+   				LULastX++;
+   				RDLastY++;
+
+   				while (LULastX >0&& LULastX <  Chessboard.BOARD_SIZE
+   						&&RDLastY > 0&& RDLastY <  Chessboard.BOARD_SIZE
+   						&&board[LULastX][RDLastY] == chessman) {
+   					LUNum++;
+   					LULastX++;
+   					RDLastY++;
+   				}
+   		int max=0;
+   		if(max<RNum)max=RNum;
+   		if(max<LNum)max=LNum;
+   		if(max<LDNum)max=LDNum;
+   		if(max<LUNum)max=LUNum;
+
+   		int x=0;
+   		int y=0;
+
+   		if(max==RNum){
+   			if(max==1){
+   				if(posY==1){
+   					x=posX;
+   					y=posY+1;
+   			}
+   				if(posY==21){
+   					x=posX;
+   					y=posY-1;
+   				}
+   				else if(board[posX][posY+1]=="十"){
+
+   							x=posX;
+   							y=posY+1;
+   																	}
+   					else{
+   						do{
+   							x = (int) (Math.random() * (Chessboard.BOARD_SIZE - 1));
+   							y = (int) (Math.random() * (Chessboard.BOARD_SIZE - 1));
+   						}while(board[posX][posY]!="十");
+   					}
+
+   		   }
+
+   		else{
+   			if(board[posX][LRLastY]=="十"){
+   				x=posX;
+   				y=LRLastY;
+   			}
+   			else if(board[posX][RLastY]=="十"){
+   				x=posX;
+   				y=RLastY;
+   			}
+
+   		}
+   	}
+   		//锟斤拷直锟斤拷锟斤拷锟叫讹拷锟斤拷锟较凤拷锟斤拷锟教猴拷锟斤拷锟铰凤拷锟斤拷锟斤拷锟角凤拷为锟斤拷
+   		else if(max==LNum){
+
+   			if(board[LLastX][posY]=="十"){//锟斤拷锟较凤拷锟斤拷锟斤拷锟斤拷锟角凤拷锟角空碉拷
+   				x=LLastX;
+   				y=posY;
+   			}
+   			else if(board[LNum][posY]=="十"){//锟斤拷锟铰凤拷锟斤拷锟斤拷锟角凤拷为锟斤拷
+   				x=LNum;
+   				y=posY;
+   			}
+
+   	}
+   		//锟斤拷锟斤拷锟斤拷锟斤拷
+   	else	if(max==LDNum){
+   		if(board[RRULastX][ULDLastY]=="十"){//锟斤拷锟斤拷锟较凤拷锟斤拷锟斤拷锟斤拷锟角凤拷锟角空碉拷
+   			x=RRULastX;
+   			y=ULDLastY;
+   		}
+   		else if(board[RULastX][LDLastY]=="十"){//锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟角凤拷为锟斤拷
+   			x=RULastX;
+   			y=LDLastY;
+   		}
+   	}
+   	else	if(max==LUNum){
+   		if(board[LLULastX][LRDLastY]=="十"){//锟斤拷锟斤拷锟较凤拷锟斤拷锟斤拷锟斤拷锟角凤拷锟角空碉拷
+   			x=LLULastX;
+   			y=LRDLastY;
+   		}
+   		else if(board[LULastX][RDLastY]=="十"){//锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟角凤拷为锟斤拷
+   			x=LULastX;
+   			y=RDLastY;
+   		}
+   	}
+   		int[] result = {x, y };
+   		return result;
+   	}
 
 	/**
-	 * 判断输赢
-	 * 
+	 * 锟叫讹拷锟斤拷赢
+	 *
 	 * @param posX
-	 *            棋子的X坐标。
+	 *            锟斤拷锟接碉拷X锟斤拷锟疥。
 	 * @param posY
-	 *            棋子的Y坐标
+	 *            锟斤拷锟接碉拷Y锟斤拷锟斤拷
 	 * @param ico
-	 *            棋子类型
-	 * @return 如果有五颗相邻棋子连成一条直接，返回真，否则相反。
+	 *            锟斤拷锟斤拷锟斤拷锟斤拷
+	 * @return 锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷一锟斤拷直锟接ｏ拷锟斤拷锟斤拷锟芥，锟斤拷锟斤拷锟洁反锟斤拷
 	 */
 	public boolean isWon(int posX, int posY, String ico) {
-		int x1 = 0;//x起点坐标
-		int x2 = 0;//x终点坐标
-		int y1 = chessboard.BOARD_SIZE;//y起点坐标
-		int y2 = chessboard.BOARD_SIZE;//y终点坐标
-		int count = 0;//某一方向上同种棋子的个数
-		int others = WIN_COUNT - 1;//除了当前的棋子外还需要的其他棋子的个数
+		int x1 = 0;//x锟斤拷锟斤拷锟斤拷锟斤拷
+		int x2 = 0;//x锟秸碉拷锟斤拷锟斤拷
+		int y1 = chessboard.BOARD_SIZE;//y锟斤拷锟斤拷锟斤拷锟斤拷
+		int y2 = chessboard.BOARD_SIZE;//y锟秸碉拷锟斤拷锟斤拷
+		int count = 0;//某一锟斤拷锟斤拷锟斤拷同锟斤拷锟斤拷锟接的革拷锟斤拷
+		int others = WIN_COUNT - 1;//锟斤拷锟剿碉拷前锟斤拷锟斤拷锟斤拷锟解还锟斤拷要锟斤拷锟斤拷锟斤拷锟斤拷锟接的革拷锟斤拷
 		String[][] board = chessboard.getBoard();
 		if(posX - others < 0 ){
 			x1 = 0;
@@ -263,7 +324,7 @@ public class GobangGame {
 		}else{
 			y2 = posY + others;
 		}
-		//横向判断是否有五个连在一起相同颜色的棋子
+		//锟斤拷锟斤拷锟叫讹拷锟角凤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷一锟斤拷锟斤拷同锟斤拷色锟斤拷锟斤拷锟斤拷
 		for(int i = y1 ; i < y2 ; i++){
 			if(board[posX][i] == ico && board[posX][i+1] == ico){
 				count ++;
@@ -271,7 +332,7 @@ public class GobangGame {
 				count = 0;
 			}
 		}
-		//纵向判断是否有五个连在一起相同颜色的棋子
+		//锟斤拷锟斤拷锟叫讹拷锟角凤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷一锟斤拷锟斤拷同锟斤拷色锟斤拷锟斤拷锟斤拷
 		for (int i = x1; i < x2; i++) {
 			if(board[i][posY] == ico && board[i+1][posY] == ico){
 				count ++;
@@ -279,7 +340,7 @@ public class GobangGame {
 				count = 0;
 			}
 		}
-		//斜向判断是否有五个连在一起相同颜色的棋子
+		//斜锟斤拷锟叫讹拷锟角凤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷一锟斤拷锟斤拷同锟斤拷色锟斤拷锟斤拷锟斤拷
 		for (int i = x1; i < x2; i++) {
 			if(board[i][i] == ico && board[i+1][i+1] == ico){
 				count++;
