@@ -1,136 +1,135 @@
+package chess;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-
 public class GobangGame {
-	// ï¿½ï¿½ï¿½ï¿½ï¿½ïµ½Ó®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿
+	// ¶¨Òå´ïµ½Ó®Ìõ¼þµÄÆå×ÓÊýÄ¿
 	private final int WIN_COUNT = 5;
-	// ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½ï¿½
+	// ¶¨ÒåÓÃ»§ÊäÈëµÄX×ø±ê
 	private int posX = 0;
-	// ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½ï¿½
+	// ¶¨ÒåÓÃ»§ÊäÈëµÄX×ø±ê
 	private int posY = 0;
-	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	// ¶¨ÒåÆåÅÌ
 	private Chessboard chessboard;
 
 	/**
-	 * ï¿½Õ¹ï¿½ï¿½ï¿½ï¿½ï¿½
+	 * ¿Õ¹¹ÔìÆ÷
 	 */
 	public GobangGame() {
 	}
 
 	/**
-	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-	 *
+	 * ¹¹ÔìÆ÷£¬³õÊ¼»¯ÆåÅÌºÍÆå×ÓÊôÐÔ
+	 * 
 	 * @param chessboard
-	 *            ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	 *            ÆåÅÌÀà
 	 */
 	public GobangGame(Chessboard chessboard) {
 		this.chessboard = chessboard;
 	}
 
 	/**
-	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ï·ï¿½ï¿½ï¿½
-	 *
+	 * ¼ì²éÊäÈëÊÇ·ñºÏ·¨¡£
+	 * 
 	 * @param inputStr
-	 *            ï¿½É¿ï¿½ï¿½ï¿½Ì¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½
-	 * @return ï¿½Ö·ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ï¿½ï¿½true,ï¿½ï¿½ï¿½ò·µ»ï¿½falseï¿½ï¿½
+	 *            ÓÉ¿ØÖÆÌ¨ÊäÈëµÄ×Ö·û´®¡£
+	 * @return ×Ö·û´®ºÏ·¨·µ»Øtrue,·´Ôò·µ»Øfalse¡£
 	 */
 	public boolean isValid(String inputStr) {
-		// ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½(,)ï¿½ï¿½Îªï¿½Ö¸ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
+		// ½«ÓÃ»§ÊäÈëµÄ×Ö·û´®ÒÔ¶ººÅ(,)×÷Îª·Ö¸ô£¬·Ö¸ô³ÉÁ½¸ö×Ö·û´®
 		String[] posStrArr = inputStr.split(",");
 		try {
 			posX = Integer.parseInt(posStrArr[0]) - 1;
 			posY = Integer.parseInt(posStrArr[1]) - 1;
 		} catch (NumberFormatException e) {
 			chessboard.printBoard();
-			System.out.println("ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½)ï¿½Ä¸ï¿½Ê½ï¿½ï¿½ï¿½ë£º");
+			System.out.println("ÇëÒÔ(Êý×Ö,Êý×Ö)µÄ¸ñÊ½ÊäÈë£º");
 			return false;
 		}
-		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½Ç·ï¿½ï¿½Ú·ï¿½Î§Ö®ï¿½ï¿½
-		if (posX < 0 || posX >= Chessboard.BOARD_SIZE || posY < 0
-				|| posY >= Chessboard.BOARD_SIZE) {
+		// ¼ì²éÊäÈëÊýÖµÊÇ·ñÔÚ·¶Î§Ö®ÄÚ
+		if (posX < 0 || posX >= Chessboard.BOARD_SIZE || posY < 0 || posY >= Chessboard.BOARD_SIZE) {
 			chessboard.printBoard();
-			System.out.println("Xï¿½ï¿½Yï¿½ï¿½ï¿½ï¿½Ö»ï¿½Ü´ï¿½ï¿½Úµï¿½ï¿½ï¿½1,ï¿½ï¿½Ð¡ï¿½Úµï¿½ï¿½ï¿½" + Chessboard.BOARD_SIZE
-					+ ",ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë£º");
+			System.out.println("XÓëY×ø±êÖ»ÄÜ´óÓÚµÈÓÚ1,ÓëÐ¡ÓÚµÈÓÚ" + Chessboard.BOARD_SIZE + ",ÇëÖØÐÂÊäÈë£º");
 			return false;
 		}
-		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		// ¼ì²éÊäÈëµÄÎ»ÖÃÊÇ·ñÒÑ¾­ÓÐÆå×Ó
 		String[][] board = chessboard.getBoard();
 		if (board[posX][posY] != "Ê®") {
+			//Ê®
 			chessboard.printBoard();
-			System.out.println("ï¿½ï¿½Î»ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë£º");
+			System.out.println("´ËÎ»ÖÃÒÑ¾­ÓÐÆå×Ó£¬ÇëÖØÐÂÊäÈë£º");
 			return false;
 		}
 		return true;
 	}
 
 	/**
-	 * ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½
+	 * ¿ªÊ¼ÏÂÆå
 	 */
 	public void start() throws Exception {
-		// trueÎªï¿½ï¿½Ï·ï¿½ï¿½ï¿½ï¿½
+		// trueÎªÓÎÏ·½áÊø
 		boolean isOver = false;
 		chessboard.initBoard();
 		chessboard.printBoard();
-		// ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ìµï¿½ï¿½ï¿½ï¿½ï¿½
+		// »ñÈ¡¼üÅÌµÄÊäÈë
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String inputStr = null;
-		// br.readLine:Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Ý°ï¿½ï¿½Ø³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý±ï¿½brï¿½ï¿½È¡ï¿½ï¿½
+		// br.readLine:Ã¿µ±¼üÅÌÊäÈëÒ»ÐÐÄÚÈÝ°´»Ø³µ¼ü£¬ÔòÊäÈëµÄÄÚÈÝ±»br¶ÁÈ¡µ½
 		while ((inputStr = br.readLine()) != null) {
 			isOver = false;
 			if (!isValid(inputStr)) {
-				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë£¬ï¿½Ù¼ï¿½ï¿½ï¿½
+				// Èç¹û²»ºÏ·¨£¬ÒªÇóÖØÐÂÊäÈë£¬ÔÙ¼ÌÐø
 				continue;
 			}
-			// ï¿½Ñ¶ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôªï¿½Ø¸ï¿½Îª"ï¿½ï¿½"
+			// °Ñ¶ÔÓ¦µÄÊý×éÔªËØ¸³Îª"¡ñ"
 			String chessman = Chessman.BLACK.getChessman();
 			chessboard.setBoard(posX, posY, chessman);
-			// ï¿½Ð¶ï¿½ï¿½Ã»ï¿½ï¿½Ç·ï¿½Ó®ï¿½ï¿½
+			// ÅÐ¶ÏÓÃ»§ÊÇ·ñÓ®ÁË
 			if (isWon(posX, posY, chessman)) {
 				isOver = true;
 
 			} else {
-				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-				int[] computerPosArr = computerDo();
+				//System.out.println("posX: "+posX);
+				// ¼ÆËã»úËæ»úÑ¡ÔñÎ»ÖÃ×ø±ê
+				int[] computerPosArr = computerDo(posX,posY);
 				chessman = Chessman.WHITE.getChessman();
-				chessboard.setBoard(computerPosArr[0], computerPosArr[1],
-						chessman);
-				// ï¿½Ð¶Ï¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½Ó®ï¿½ï¿½
+				chessboard.setBoard(computerPosArr[0], computerPosArr[1], chessman);
+				// ÅÐ¶Ï¼ÆËã»úÊÇ·ñÓ®ÁË
 				if (isWon(computerPosArr[0], computerPosArr[1], chessman)) {
 					isOver = true;
 				}
 			}
-			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¤ï¿½ß£ï¿½Ñ¯ï¿½ï¿½ï¿½Ã»ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï·
+			// Èç¹û²úÉúÊ¤Õß£¬Ñ¯ÎÊÓÃ»§ÊÇ·ñ¼ÌÐøÓÎÏ·
 			if (isOver) {
-				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â³ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½Ì£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï·
+				// Èç¹û¼ÌÐø£¬ÖØÐÂ³õÊ¼»¯ÆåÅÌ£¬¼ÌÐøÓÎÏ·
 				if (isReplay(chessman)) {
 					chessboard.initBoard();
 					chessboard.printBoard();
 					continue;
 				}
-				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë³ï¿½ï¿½ï¿½ï¿½ï¿½
+				// Èç¹û²»¼ÌÐø£¬ÍË³ö³ÌÐò
 				break;
 			}
 			chessboard.printBoard();
-			System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê£¬Ó¦ï¿½ï¿½x,yï¿½Ä¸ï¿½Ê½ï¿½ï¿½ï¿½ë£º");
+			// System.out.println("ÇëÊäÈëÄúÏÂÆåµÄ×ø±ê£¬Ó¦ÒÔx,yµÄ¸ñÊ½ÊäÈë£º");
 		}
 	}
 
 	/**
-	 * ï¿½Ç·ï¿½ï¿½ï¿½ï¿½Â¿ï¿½Ê¼ï¿½ï¿½ï¿½å¡£
-	 *
+	 * ÊÇ·ñÖØÐÂ¿ªÊ¼ÏÂÆå¡£
+	 * 
 	 * @param chessman
-	 *            "ï¿½ï¿½"Îªï¿½Ã»ï¿½ï¿½ï¿½"ï¿½ï¿½"Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-	 * @return ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½trueï¿½ï¿½ï¿½ï¿½ï¿½ò·µ»ï¿½falseï¿½ï¿½
+	 *            "¡ñ"ÎªÓÃ»§£¬"¡ð"Îª¼ÆËã»ú¡£
+	 * @return ¿ªÊ¼·µ»Øtrue£¬·´Ôò·µ»Øfalse¡£
 	 */
 	public boolean isReplay(String chessman) throws Exception {
 		chessboard.printBoard();
-		String message = chessman.equals(Chessman.BLACK.getChessman()) ? "ï¿½ï¿½Ï²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó®ï¿½Ë£ï¿½"
-				: "ï¿½ï¿½ï¿½Åºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë£ï¿½";
-		System.out.println(message + "ï¿½ï¿½ï¿½ï¿½Ò»ï¿½Ö£ï¿½(y/n)");
+		String message = chessman.equals(Chessman.BLACK.getChessman()) ? "¹§Ï²Äú£¬ÄúÓ®ÁË£¬" : "ºÜÒÅº¶£¬ÄúÊäÁË£¬";
+		System.out.println(message + "ÔÙÏÂÒ»¾Ö£¿(y/n)");
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		if (br.readLine().equals("y")) {
-			// ï¿½ï¿½Ê¼ï¿½ï¿½Ò»ï¿½ï¿½
+			// ¿ªÊ¼ÐÂÒ»¾Ö
 			return true;
 		}
 		return false;
@@ -138,220 +137,285 @@ public class GobangGame {
 	}
 
 	/**
-	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	 * ¼ÆËã»úÖÇÄÜÏÂÆå
+	 * £¨¶ÂÆå£©¶ÂÔÚ¸÷¸ö·½ÏòºÚÆåÏàÁ¬Êý¶àµÄÎ»ÖÃ
 	 */
-   public int[] computerDo(int posX,int posY) {
-   		String[][] board=chessboard.getBoard();
-   		int RLastY=posY;
-   		String chessman = Chessman.BLACK.getChessman();
-   		while(RLastY>0 && board[posX][RLastY]==chessman){
-   			RLastY--;
-   		}
-   		int LRLastY=RLastY;
-   		int RNum=0;
-   		RLastY++;
-   		while(RLastY<Chessboard.BOARD_SIZE&&board[posX][RLastY]==chessman){
-   			RNum++;
-   			RLastY++;
-   		}
-   		int LLastX=posX;
-   		while(LLastX>0 && board[LLastX][posY]==chessman){
-   			LLastX--;
-   		}
-   		int LLLastX=LLastX;
-   		int LNum=0;
-   		LLastX++;
-   		while(LLastX<Chessboard.BOARD_SIZE&&board[LLastX][posY]==chessman){
-   			LLastX++;
-   			LNum++;
-   		}
-   		int RULastX = posX;
-   		int LDLastY = posY;
-   		while (RULastX >0 && LDLastY < Chessboard.BOARD_SIZE&& board[RULastX][LDLastY] == chessman) {
-   			RULastX--;
-   			LDLastY++;
-   		}
-   		int RRULastX=RULastX;
-   		int ULDLastY=LDLastY;
-   		int LDNum = 0;
-   		RULastX++;
-   		LDLastY--;
+	public int[] computerDo(int lastX, int lastY) {
 
-   		while (LDLastY >0&& RULastX <  Chessboard.BOARD_SIZE
-   				&& board[RULastX][LDLastY] == chessman) {
-   			LDNum++;
-   			RULastX++;
-   			LDLastY--;
-   		}
-   				int LULastX = posX;
-   				int RDLastY = posY;
-   				while (LULastX > 0 && RDLastY>=0&& board[LULastX][RDLastY] == chessman) {
-   					LULastX--;
-   					RDLastY--;
-   				}
-   				int LLULastX=LULastX;
-   				int LRDLastY=RDLastY;
-   				int LUNum = 0;
-   				LULastX++;
-   				RDLastY++;
+		/*int posX = (int) (Math.random() * (Chessboard.BOARD_SIZE - 1));
+		int posY = (int) (Math.random() * (Chessboard.BOARD_SIZE - 1));
+		String[][] board = chessboard.getBoard();
+		while (board[posX][posY] != "Ê®") {
+			posX = (int) (Math.random() * (Chessboard.BOARD_SIZE - 1));
+			posY = (int) (Math.random() * (Chessboard.BOARD_SIZE - 1));
+		}*/
+		int posX = 0, posY=0;
+		String[][] board = chessboard.getBoard();
+		
+		String chessman = Chessman.BLACK.getChessman();
+		int num1=1,num2=1,num3=1,num4=1;
+		//Ë®Æ½·½Ïò
+		int leftY = lastY-1;
+		while(leftY >= 0 && board[lastX][leftY] == chessman){
+			leftY--;
+			num1++;
+		}
+		int rightY = lastY+1;
+		while(rightY < Chessboard.BOARD_SIZE && board[lastX][leftY] == chessman){
+			rightY++;
+			num1++;
+		}
+		//´¹Ö±·½Ïò
+		int upX = lastX-1;
+		while(upX >= 0 && board[upX][lastY] == chessman){
+			upX--;
+			num2++;
+		}
+		int downX = lastX+1;
+		while(downX < Chessboard.BOARD_SIZE && board[downX][lastY] == chessman){
+			downX++;
+			num2++;
+		}
+		//ÓÒÐ±·½Ïò
+		int rightupX = lastX-1;
+		int rightupY = lastY+1;
+		while(rightupX >= 0 && rightupY < Chessboard.BOARD_SIZE && board[rightupX][rightupY] == chessman){
+			rightupX--;
+			rightupY++;
+			num3++;
+		}
+		int leftdownX = lastX+1;
+		int leftdownY = lastY-1;
+		while(leftdownY >= 0 && leftdownX < Chessboard.BOARD_SIZE && board[leftdownX][leftdownY] == chessman){
+			leftdownX++;
+			leftdownY--;
+			num3++;
+		}
+		//×óÐ±·½Ïò
+		int leftupX = lastX-1;
+		int leftupY = lastY-1;
+		while(leftupX >= 0 && leftupY >=0 && board[leftupX][leftupY] == chessman){
+			leftupX--;
+			leftupY--;
+			num4++;
+		}
+		int rightdownX = lastX+1;
+		int rightdownY = lastY+1;
+		while(rightdownY < Chessboard.BOARD_SIZE && rightdownX < Chessboard.BOARD_SIZE && board[rightdownX][rightdownY] == chessman){
+			rightdownX++;
+			rightdownY++;
+			num4++;
+		}
+		
+		int max = num1;
+		if(max<num2)max=num2;
+		if(max<num3)max=num3;
+		if(max<num4)max=num4;
+		
+		//Ñ­»·ÅÐ¶Ï£¬±ÜÃâÖÜÎ§¶¼´ïµ½±ß½ç
+		while(true){
+			if(max == num1){
+				if(leftY != -1 && board[lastX][leftY] == "Ê®"){
+					posX = lastX;
+					posY = leftY;
+					break;
+				}else if(rightY != Chessboard.BOARD_SIZE && board[lastX][rightY] == "Ê®"){
+					posX = lastX;
+					posY = rightY;
+					break;
+				}else{
+					max = num2;
+					if(max < num3)max=num3;
+					if(max < num4)max=num4;
+				}
+			}
+			if(max == num2){
+				if(upX != -1 && board[upX][lastY] == "Ê®"){
+					posX = upX;
+					posY = lastY;
+					break;
+				}else if(downX != Chessboard.BOARD_SIZE && board[downX][lastY] == "Ê®"){
+					posX = downX;
+					posY = lastY;
+					break;
+				}else{
+					max = num1;
+					if(max < num3)max=num3;
+					if(max < num4)max=num4;
+				}
+			}
+			if(max == num3){
+				if(rightupX != -1 && rightupY != Chessboard.BOARD_SIZE && board[rightupX][rightupY] == "Ê®"){
+					posX = rightupX;
+					posY = rightupY;
+					break;
+				}else if(leftdownX != Chessboard.BOARD_SIZE && leftdownY != -1 && board[leftdownX][leftdownY] == "Ê®"){
+					posX = leftdownX;
+					posY = leftdownY;
+					break;
+				}else{
+					max = num4;
+					if(max < num1)max=num1;
+					if(max < num2)max=num2;
+				}
+			}
+			if(max == num4){
+				if(leftupX != -1 && leftupY != -1 && board[leftupX][leftupY] == "Ê®"){
+					posX = leftupX;
+					posY = leftupY;
+					break;
+				}else if(rightdownX != Chessboard.BOARD_SIZE && rightdownY != Chessboard.BOARD_SIZE && board[rightdownX][rightdownY] == "Ê®"){
+					posX = rightdownX;
+					posY = rightdownY;
+					break;
+				}else{
+					max = num1;
+					if(max < num2)max=num2;
+					if(max < num3)max=num3;
+				}
+			}
+		}
+		
+		
+		int[] result = { posX, posY };
+		
+		return result;
+	}
 
-   				while (LULastX >0&& LULastX <  Chessboard.BOARD_SIZE
-   						&&RDLastY > 0&& RDLastY <  Chessboard.BOARD_SIZE
-   						&&board[LULastX][RDLastY] == chessman) {
-   					LUNum++;
-   					LULastX++;
-   					RDLastY++;
-   				}
-   		int max=0;
-   		if(max<RNum)max=RNum;
-   		if(max<LNum)max=LNum;
-   		if(max<LDNum)max=LDNum;
-   		if(max<LUNum)max=LUNum;
-
-   		int x=0;
-   		int y=0;
-
-   		if(max==RNum){
-   			if(max==1){
-   				if(posY==1){
-   					x=posX;
-   					y=posY+1;
-   			}
-   				if(posY==21){
-   					x=posX;
-   					y=posY-1;
-   				}
-   				else if(board[posX][posY+1]=="Ê®"){
-
-   							x=posX;
-   							y=posY+1;
-   																	}
-   					else{
-   						do{
-   							x = (int) (Math.random() * (Chessboard.BOARD_SIZE - 1));
-   							y = (int) (Math.random() * (Chessboard.BOARD_SIZE - 1));
-   						}while(board[posX][posY]!="Ê®");
-   					}
-
-   		   }
-
-   		else{
-   			if(board[posX][LRLastY]=="Ê®"){
-   				x=posX;
-   				y=LRLastY;
-   			}
-   			else if(board[posX][RLastY]=="Ê®"){
-   				x=posX;
-   				y=RLastY;
-   			}
-
-   		}
-   	}
-   		//ï¿½ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½Îªï¿½ï¿½
-   		else if(max==LNum){
-
-   			if(board[LLastX][posY]=="Ê®"){//ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ç¿Õµï¿½
-   				x=LLastX;
-   				y=posY;
-   			}
-   			else if(board[LNum][posY]=="Ê®"){//ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½Îªï¿½ï¿½
-   				x=LNum;
-   				y=posY;
-   			}
-
-   	}
-   		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-   	else	if(max==LDNum){
-   		if(board[RRULastX][ULDLastY]=="Ê®"){//ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ç¿Õµï¿½
-   			x=RRULastX;
-   			y=ULDLastY;
-   		}
-   		else if(board[RULastX][LDLastY]=="Ê®"){//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½Îªï¿½ï¿½
-   			x=RULastX;
-   			y=LDLastY;
-   		}
-   	}
-   	else	if(max==LUNum){
-   		if(board[LLULastX][LRDLastY]=="Ê®"){//ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ç¿Õµï¿½
-   			x=LLULastX;
-   			y=LRDLastY;
-   		}
-   		else if(board[LULastX][RDLastY]=="Ê®"){//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½Îªï¿½ï¿½
-   			x=LULastX;
-   			y=RDLastY;
-   		}
-   	}
-   		int[] result = {x, y };
-   		return result;
-   	}
 	/**
-	 * ï¿½Ð¶ï¿½ï¿½ï¿½Ó®
-	 *
+	 * ÅÐ¶ÏÊäÓ®
+	 * 
 	 * @param posX
-	 *            ï¿½ï¿½ï¿½Óµï¿½Xï¿½ï¿½ï¿½ê¡£
+	 *            Æå×ÓµÄX×ø±ê¡£
 	 * @param posY
-	 *            ï¿½ï¿½ï¿½Óµï¿½Yï¿½ï¿½ï¿½ï¿½
+	 *            Æå×ÓµÄY×ø±ê
 	 * @param ico
-	 *            ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-	 * @return ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ö±ï¿½Ó£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ£¬ï¿½ï¿½ï¿½ï¿½ï¿½à·´ï¿½ï¿½
+	 *            Æå×ÓÀàÐÍ
+	 * @return Èç¹ûÓÐÎå¿ÅÏàÁÚÆå×ÓÁ¬³ÉÒ»ÌõÖ±½Ó£¬·µ»ØÕæ£¬·ñÔòÏà·´¡£
 	 */
 	public boolean isWon(int posX, int posY, String ico) {
-		int x1 = 0;//xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-		int x2 = 0;//xï¿½Õµï¿½ï¿½ï¿½ï¿½ï¿½
-		int y1 = chessboard.BOARD_SIZE;//yï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-		int y2 = chessboard.BOARD_SIZE;//yï¿½Õµï¿½ï¿½ï¿½ï¿½ï¿½
-		int count = 0;//Ä³Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ÓµÄ¸ï¿½ï¿½ï¿½
-		int others = WIN_COUNT - 1;//ï¿½ï¿½ï¿½Ëµï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½â»¹ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÓµÄ¸ï¿½ï¿½ï¿½
 		String[][] board = chessboard.getBoard();
-		if(posX - others < 0 ){
-			x1 = 0;
-		}else{
-			x1 = posY - others;
-		}
-		if(posY - others < 0 ){
-			y1 = 0;
-		}else{
-			y1 = posY - others;
-		}
-		if(posX + others > chessboard.BOARD_SIZE){
-			x2 = chessboard.BOARD_SIZE;
-		}else{
-			x2 = posX + others;
-		}
-		if(posY + others > chessboard.BOARD_SIZE){
-			y2 = chessboard.BOARD_SIZE;
-		}else{
-			y2 = posY + others;
-		}
-		//ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-		for(int i = y1 ; i < y2 ; i++){
-			if(board[posX][i] == ico && board[posX][i+1] == ico){
-				count ++;
-			}else if(count != others){
-				count = 0;
-			}
-		}
-		//ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-		for (int i = x1; i < x2; i++) {
-			if(board[i][posY] == ico && board[i+1][posY] == ico){
-				count ++;
-			}else if(count != others){
-				count = 0;
-			}
-		}
-		//Ð±ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-		for (int i = x1; i < x2; i++) {
-			if(board[i][i] == ico && board[i+1][i+1] == ico){
+		int count = 1;
+		// ÅÐ¶ÏË®Æ½·½Ïò
+		int tempY = posY - 1;
+		while (tempY >= 0 && count <= WIN_COUNT) {
+			if (board[posX][tempY] == ico) {
+				tempY--;
 				count++;
-			}else if(count != others){
-				count=0;
+			}else{
+				break;
 			}
 		}
-		if (count == 0) {
-			return false;
-		}else{
+		if (count == WIN_COUNT) {
 			return true;
+		} else {
+			tempY = posY + 1;
+			while (tempY < chessboard.BOARD_SIZE && count <= WIN_COUNT) {
+				if (board[posX][tempY] == ico) {
+					tempY++;
+					count++;
+				}else{
+					break;
+				}
+			}
+			if (count == WIN_COUNT) {
+				return true;
+			}
 		}
+		// ÅÐ¶Ï´¹Ö±·½Ïò
+		count = 1;
+		int tempX = posX - 1;
+		while (tempX >= 0 && count <= WIN_COUNT) {
+			if (board[tempX][posY] == ico) {
+				tempX--;
+				count++;
+			}else{
+				break;
+			}
+		}
+		if (count == WIN_COUNT) {
+			return true;
+		} else {
+			tempX = posX + 1;
+			while (tempX < chessboard.BOARD_SIZE && count <= WIN_COUNT) {
+				if (board[tempX][posY] == ico) {
+					tempX++;
+					count++;
+				}else{
+					break;
+				}
+			}
+			if (count == WIN_COUNT) {
+				return true;
+			}
+		}
+		// ÅÐ¶ÏÓÒÐ±·½Ïò
+		count = 1;
+		//ÓÒÐ±ÉÏ
+		tempX = posX - 1;
+		tempY = posY + 1;
+		while (tempX >= 0 && tempY < chessboard.BOARD_SIZE && count <= WIN_COUNT) {
+			if (board[tempX][tempY] == ico) {
+				tempX--;
+				tempY++;
+				count++;
+			}else{
+				break;
+			}
+		}
+		if (count == WIN_COUNT) {
+			return true;
+		} else {
+			//ÓÒÐ±ÏÂ
+			tempX = posX + 1;
+			tempY = posY - 1;
+			while (tempX < chessboard.BOARD_SIZE && tempY >= 0 && count <= WIN_COUNT) {
+				if (board[tempX][tempY] == ico) {
+					tempX++;
+					tempY--;
+					count++;
+				}else{
+					break;
+				}
+			}
+			if (count == WIN_COUNT) {
+				return true;
+			}
+		}
+		// ÅÐ¶Ï×óÐ±·½Ïò
+		count = 1;
+		//×óÐ±ÉÏ
+		tempX = posX + 1;
+		tempY = posY + 1;
+		while (tempX < chessboard.BOARD_SIZE && tempY < chessboard.BOARD_SIZE && count <= WIN_COUNT) {
+			if (board[tempX][tempY] == ico) {
+				tempX++;
+				tempY++;
+				count++;
+			}else{
+				break;
+			}
+		}
+		if (count == WIN_COUNT) {
+			return true;
+		} else {
+			tempX = posX - 1;
+			tempY = posY - 1;
+			while (tempX >= 0 && tempY >=0 && count <= WIN_COUNT) {
+				if (board[tempX][tempY] == ico) {
+					tempX--;
+					tempY--;
+					count++;
+				}else{
+					break;
+				}
+			}
+			if (count == WIN_COUNT) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public static void main(String[] args) throws Exception {
