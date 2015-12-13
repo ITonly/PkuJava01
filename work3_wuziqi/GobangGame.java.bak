@@ -376,7 +376,7 @@ public class GobangGame {
 		temp=posY+WIN_COUNT-1;
 		endY=temp>Chessboard.BOARD_SIZE-1?Chessboard.BOARD_SIZE-1:temp;
 		String[][] board=chessboard.getBoard();
-		//判断横向,从左到右方向计算相同相邻棋子的数目
+		//判断横向
 		for(int i=startY;i<endY;i++){
 			if(board[posX][i]==ico && board[posX][i+1]==ico){
 				count++;
@@ -384,7 +384,7 @@ public class GobangGame {
 				count=0;
 				
 			}
-		}
+			}
 		//判断竖直方向
 		if(count==0){
 		for(int i=startX;i<endX;i++){

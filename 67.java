@@ -1,6 +1,6 @@
 public class Solution {
     public String addBinary(String a, String b) {
-        char [] s1=a.toCharArray();
+        char [] s1=a.toCharArray();//把字符串转化为字符数组
         char []s2=b.toCharArray();
         // if(s1.length>=s2.length){
         //     char[] s_result=new[s1.length+1];
@@ -12,12 +12,12 @@ public class Solution {
         // }else{
         //     char carry='0';
         // }
-        char[] scopy=new char[maxLength(a,b)];
+        char[] scopy=new char[maxLength(a,b)];//两个数组长度不同，把小的数组扩充为和大的长度一样
         char[] sorigin=null;
         int m=s1.length;
     	int n=s2.length;
         if(s1.length>s2.length){
-        	scopy=Arrays.copyOf(s2, m);
+        	scopy=Arrays.copyOf(s2, m);//把小数组复制到scoopy中
         	for(int j=n-1;j>=0;j--){
         		scopy[m-1]=s2[j];
         		m--;
